@@ -1,31 +1,11 @@
-<script>
-  export default {
-    setup() {
-
-    },
-    mounted() {
-      console.log("funcionou")
-    }
-  }
-</script>
-
 <template>
-  <div>
-    <h1>test</h1>
-  </div>
+  <UsersList />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<script>
+import UsersList from "./components/UsersList.vue";
+
+export default {
+  components: { UsersList },
+};
+</script>
