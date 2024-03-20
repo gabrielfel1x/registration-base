@@ -1,8 +1,9 @@
 <template>
   <ListSection>
     <p>Customer List</p>
-    <DefaultBox v-for="user in responseData" :key="user.id" class="flex">
-      <div class="flex flex-col items-start m-auto">
+    <DefaultBox v-for="user in responseData" :key="user.id" class="flex items-center justify-center">
+      <div class="flex flex-col items-start m-16">
+        
         <p>
           Name:
           {{ `${user.name}` }}
@@ -13,14 +14,14 @@
         </p>
       </div>
 
-      <button class="m-auto">
+      <button class="ml-auto mr-10">
         <i class="fa-solid fa-trash"></i>
       </button>
     </DefaultBox>
   </ListSection>
 </template>
 
-<script lang="ts">
+<script>
 import DefaultBox from "./DefaultBox.vue";
 import ListSection from "./ListSection.vue";
 import { api } from "../plugins/api";
