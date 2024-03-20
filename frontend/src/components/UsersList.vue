@@ -1,31 +1,48 @@
 <template>
   <ListSection>
-    <DefaultBox v-for="item in list" :key="item.id">
-      {{ `${item.name}, ${item.email}` }}
+    <p>Customer List</p>
+    <DefaultBox v-for="user in responseData" :key="user.id" class="flex">
+      <div class="flex flex-col items-start m-auto">
+        <p>
+          Name:
+          {{ `${user.name}` }}
+        </p>
+        <p>
+          Email:
+          {{ `${user.email}` }}
+        </p>
+      </div>
+
+      <button class="m-auto">
+        <i class="fa-solid fa-trash"></i>
+      </button>
     </DefaultBox>
   </ListSection>
 </template>
 
-<script>
+<script lang="ts">
 import DefaultBox from "./DefaultBox.vue";
 import ListSection from "./ListSection.vue";
+import { api } from "../plugins/api";
+import { ref } from "vue";
 
 export default {
   components: { ListSection, DefaultBox },
   setup() {
-    const list = [
-      { id: 1, name: "test", email: "test@mail.com" },
-      { id: 2, name: "test", email: "test@mail.com" },
-      { id: 3, name: "test", email: "test@mail.com" },
-      { id: 4, name: "test", email: "test@mail.com" },
-      { id: 5, name: "test", email: "test@mail.com" },
-      { id: 6, name: "test", email: "test@mail.com" },
-      { id: 7, name: "test", email: "test@mail.com" },
-      { id: 8, name: "test", email: "test@mail.com" },
-      { id: 9, name: "test", email: "test@mail.com" },
-    ];
+    const responseData = ref([]);
 
-    return { list };
+    const collectData = async () => {
+      try {
+        const response = await api.get("/customers");
+        responseData.value = response.data;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    return { responseData, collectData };
+  },
+  mounted() {
+    this.collectData();
   },
 };
 </script>

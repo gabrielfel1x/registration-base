@@ -1,5 +1,5 @@
 <template>
-  <section class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 container mx-auto">
+  <section class="grid gap-1 container w-6/12 mt-6">
     <slot />
   </section>
 </template>
