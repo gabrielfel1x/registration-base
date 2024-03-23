@@ -1,24 +1,21 @@
 <template>
   <ListSection>
-    <p>Customer List</p>
     <DefaultBox
       v-for="user in responseData"
       :key="user.id"
       class="flex items-center justify-center"
     >
-      <div class="flex flex-col items-start m-16">
-        <p>
-          Name:
+      <div class="flex flex-col items-start justify-center ml-8">
+        <p class="user">
           {{ `${user.name}` }}
         </p>
-        <p>
-          Email:
+        <p class="user">
           {{ `${user.email}` }}
         </p>
       </div>
 
       <button
-        class="ml-auto mr-10 hover:transform hover:scale-105"
+        class="ml-auto mr-10 hover:transform hover:scale-105 hover:opacity-80"
         @click="deleteUser(user.id)"
       >
         <i class="fa-solid fa-trash"></i>
@@ -71,5 +68,11 @@ export default {
 <style>
 button {
   transition: transform 0.3s ease-in-out;
+}
+.user {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>
