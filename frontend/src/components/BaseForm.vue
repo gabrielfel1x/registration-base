@@ -2,27 +2,30 @@
   <form
     action="post"
     @submit.prevent="submitForm"
-    class="flex items-start flex-col bg-gray-200 rounded-md p-8 m-4 w-6/12 shadow-xl"
+    class="flex items-center flex-col bg-gray-200 rounded-md p-8 m-4 w-6/12 shadow-xl"
   >
-    <label>Name</label>
-    <input
-      type="text"
-      placeholder="name"
-      v-model="formData.name"
-      class="input"
-    />
+    <label
+      ><p><i class="fa-solid fa-user"></i></p>
+      <input
+        type="text"
+        placeholder="name"
+        v-model="formData.name"
+        class="input"
+    /></label>
 
-    <label>Email</label>
-    <input
-      type="email"
-      placeholder="name@mail.com"
-      v-model="formData.email"
-      class="input"
-    />
-    <p v-if="warning">{{ warningMsg }}</p>
+    <label
+      ><p><i class="fa-solid fa-envelope"></i></p>
+      <input
+        type="email"
+        placeholder="name@mail.com"
+        v-model="formData.email"
+        class="input"
+    /></label>
+
+    <p v-if="warning" class="text-red-700 ml-2">{{ warningMsg }}</p>
 
     <button
-      class="m-auto bg-gray-900 text-gray-100 px-14 p-2 rounded-md"
+      class="m-auto bg-gray-900 text-gray-100 px-14 p-2 rounded-md hover:transform hover:scale-105"
       type="submit"
     >
       POST
@@ -58,7 +61,7 @@ export default {
         }
       } else {
         warning.value = true;
-        warningMsg.value = "please fill in all fields"
+        warningMsg.value = "please fill in all fields";
       }
     };
 
@@ -68,7 +71,13 @@ export default {
 </script>
 
 <style scoped>
+label {
+  @apply w-4/5 flex justify-center items-center;
+}
 .input {
-  @apply mb-5 p-2 border-solid border-2 rounded-md w-full;
+  @apply mb-5 p-2 border-solid border-2 rounded-md w-full focus:outline-none;
+}
+p {
+  @apply mb-4 mr-4
 }
 </style>

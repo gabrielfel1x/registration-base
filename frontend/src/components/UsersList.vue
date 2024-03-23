@@ -1,9 +1,12 @@
 <template>
   <ListSection>
     <p>Customer List</p>
-    <DefaultBox v-for="user in responseData" :key="user.id" class="flex items-center justify-center">
+    <DefaultBox
+      v-for="user in responseData"
+      :key="user.id"
+      class="flex items-center justify-center"
+    >
       <div class="flex flex-col items-start m-16">
-        
         <p>
           Name:
           {{ `${user.name}` }}
@@ -14,7 +17,10 @@
         </p>
       </div>
 
-      <button class="ml-auto mr-10">
+      <button
+        class="ml-auto mr-10 hover:transform hover:scale-105"
+        @click="deleteUser(user.id)"
+      >
         <i class="fa-solid fa-trash"></i>
       </button>
     </DefaultBox>
@@ -25,7 +31,7 @@
 import DefaultBox from "./DefaultBox.vue";
 import ListSection from "./ListSection.vue";
 import { api } from "../plugins/api";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 export default {
   components: { ListSection, DefaultBox },
@@ -40,10 +46,30 @@ export default {
         console.log(error);
       }
     };
-    return { responseData, collectData };
+
+    const deleteUser = async (id) => {
+      try {
+        await api.delete("/customer?id=" + id);
+        collectData();
+        console.log(id);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    watch(responseData, () => {
+      collectData();
+    });
+    return { responseData, collectData, deleteUser };
   },
   mounted() {
     this.collectData();
   },
 };
 </script>
+
+<style>
+button {
+  transition: transform 0.3s ease-in-out;
+}
+</style>
