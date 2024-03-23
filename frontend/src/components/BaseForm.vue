@@ -28,8 +28,10 @@
       class="m-auto bg-gray-900 text-gray-100 px-14 p-2 rounded-md hover:transform hover:scale-105"
       type="submit"
     >
-      POST
+      REGISTER
     </button>
+    <button @click="changeTrashView" type="button">DELETE USER</button>
+
   </form>
 </template>
 
@@ -67,6 +69,9 @@ export default {
 
     return { formData, submitForm, warningMsg, warning };
   },
+  props: {
+    changeTrashView: Function
+  }
 };
 </script>
 

@@ -2,8 +2,8 @@
   <div class="base-container">
     <Title />
     <change-view-button @click="changeView = !changeView" v-bind:class="{ show: changeView, hide: !changeView }"/>
-    <base-form v-show="changeView"/>
-    <usersList />
+    <base-form v-show="changeView" :changeTrashView="changeTrashView"/>
+    <usersList :showCard="trashView" />
   </div>
 </template>
 
@@ -17,9 +17,14 @@ import { ref } from 'vue'
 export default {
   components: { UsersList, Title, BaseForm, ChangeViewButton },
   setup() {
+    const trashView = ref(true)
     const changeView = ref(true);
 
-    return { changeView };
+    function changeTrashView () {
+      trashView.value = !trashView.value
+    }
+
+    return { changeView, trashView, changeTrashView };
   },
 };
 </script>

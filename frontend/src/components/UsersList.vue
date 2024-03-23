@@ -14,12 +14,13 @@
         </p>
       </div>
 
-      <button
+      <div
         class="ml-auto mr-10 hover:transform hover:scale-105 hover:opacity-80"
-        @click="deleteUser(user.id)"
       >
-        <i class="fa-solid fa-trash"></i>
-      </button>
+        <button v-show="showCard" @click="deleteUser(user.id)">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </div>
     </DefaultBox>
   </ListSection>
 </template>
@@ -61,6 +62,9 @@ export default {
   },
   mounted() {
     this.collectData();
+  },
+  props: {
+    showCard: Boolean,
   },
 };
 </script>
