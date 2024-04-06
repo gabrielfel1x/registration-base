@@ -23,54 +23,71 @@
     /></label>
 
     <p v-if="warning" class="text-red-700 ml-2">{{ warningMsg }}</p>
-
-    <button
-      class="m-auto bg-gray-900 text-gray-100 px-14 p-2 rounded-md hover:transform hover:scale-105"
-      type="submit"
+    <h2
+      v-if="successfully"
+      class="text-green-700 ml-2 font-semibold mb-8 text-2xl"
     >
-      REGISTER
-    </button>
-    <button @click="changeTrashView" type="button">DELETE USER</button>
+      {{ successfullyMsg }}
+    </h2>
 
+    <div class="flex gap-10">
+      <button
+        class="m-auto bg-gray-900 text-gray-100 px-14 p-2 rounded-md hover:transform hover:scale-105"
+        type="submit"
+      >
+        REGISTER
+      </button>
+      <button
+        @click="openUsers"
+        type="button"
+        class="m-auto bg-gray-700 text-gray-100 px-14 p-2 rounded-md hover:transform hover:scale-105"
+      >
+        SEARCH USER
+      </button>
+    </div>
   </form>
 </template>
 
-<script>
+<script setup lang="ts">
 import { api } from "../plugins/api";
 import { ref } from "vue";
+import type { Ref } from "vue";
+import { defineProps } from "vue";
+import RegisterMsgVue from "./RegisterMsg.vue";
 
-export default {
-  name: "BaseForm",
-  setup() {
-    const formData = ref({
-      name: "",
-      email: "",
-    });
+const formData: Ref<{ name: string; email: string }> = ref({
+  name: "",
+  email: "",
+});
 
-    const warning = ref(false);
-    const warningMsg = ref("campos vazios!");
+const props = defineProps({
+  openUsers: Function as () => void,
+});
+props.openUsers;
 
-    const submitForm = async () => {
-      if (formData.value.name !== "" || formData.value.email !== "") {
-        try {
-          const submitResponse = await api.post("/customer", formData.value);
-          alert("registered successfully", submitResponse);
-          warning.value = false;
-          formData.value.name = "";
-          formData.value.name = "";
-        } catch (error) {
-          alert("error when registering user", error);
-        }
-      } else {
-        warning.value = true;
-        warningMsg.value = "please fill in all fields";
-      }
-    };
+const warning: Ref<Boolean> = ref(false);
+const successfully: Ref<Boolean> = ref(false);
+const warningMsg: Ref<string> = ref("campos vazios!");
+const successfullyMsg: Ref<string> = ref("REGISTERED SUCCESSFULLY!");
 
-    return { formData, submitForm, warningMsg, warning };
-  },
-  props: {
-    changeTrashView: Function
+const submitForm: () => Promise<void> = async () => {
+  if (formData.value.name !== "" || formData.value.email !== "") {
+    try {
+      const submitResponse = await api.post("/customer", formData.value);
+      console.log(submitResponse);
+      successfully.value = true;
+      setTimeout(() => {
+        successfully.value = false;
+      }, 3000);
+      warning.value = false;
+      formData.value.name = "";
+      formData.value.email = "";
+    } catch (error) {
+      alert("error when registering user");
+    }
+  } else {
+    warning.value = true;
+    warningMsg.value = "please fill in all fields";
   }
 };
 </script>
@@ -83,6 +100,6 @@ label {
   @apply mb-5 p-2 border-solid border-2 rounded-md w-full focus:outline-none;
 }
 p {
-  @apply mb-4 mr-4
+  @apply mb-4 mr-4;
 }
 </style>

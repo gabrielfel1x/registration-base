@@ -1,42 +1,48 @@
 <template>
   <div class="base-container">
+    <modal v-show="modalVisible" :closeModal="openUsers" />
     <Title />
-    <change-view-button @click="changeView = !changeView" v-bind:class="{ show: changeView, hide: !changeView }"/>
-    <base-form v-show="changeView" :changeTrashView="changeTrashView"/>
-    <usersList :showCard="trashView" />
+    <change-view-button @click="toggleViewForm" />
+    <base-form v-show="viewVisible" :openUsers="openUsers" />
+    <usersList />
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { ref } from "vue";
+import type { Ref } from "vue";
 import Title from "./Title.vue";
 import UsersList from "./UsersList.vue";
 import BaseForm from "./BaseForm.vue";
-import ChangeViewButton from './ChangeViewButton.vue';
-import { ref } from 'vue'
+import ChangeViewButton from "./ChangeViewButton.vue";
+import Modal from "./Modal.vue";
 
 export default {
-  components: { UsersList, Title, BaseForm, ChangeViewButton },
+  components: { UsersList, Title, BaseForm, ChangeViewButton, Modal },
   setup() {
-    const trashView = ref(true)
-    const changeView = ref(true);
+    const viewVisible: Ref<Boolean> = ref(true);
+    const modalVisible: Ref<Boolean> = ref(false);
 
-    function changeTrashView () {
-      trashView.value = !trashView.value
+    function toggleViewForm(): void {
+      viewVisible.value = !viewVisible.value;
     }
 
-    return { changeView, trashView, changeTrashView };
+    function openUsers(): void {
+      modalVisible.value = !modalVisible.value;
+    }
+
+    return {
+      viewVisible,
+      toggleViewForm,
+      modalVisible,
+      openUsers,
+    };
   },
 };
 </script>
 
 <style scoped>
 .base-container {
-  @apply w-full min-h-screen my-10;
-}
-.show {
-  @apply bg-green-700
-}
-.hide {
-  @apply bg-red-700
+  @apply w-full min-h-screen my-10 flex items-center justify-center;
 }
 </style>
