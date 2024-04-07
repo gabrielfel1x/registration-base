@@ -23,7 +23,7 @@
       </div>
     </DefaultBox>
   </ListSection>
-  <p v-else class="w-full text-red-900">dont exist!</p>
+  <p v-else class="w-full text-red-900">NÃO EXISTE!</p>
 </template>
 
 <script lang="ts">

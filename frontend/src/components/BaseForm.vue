@@ -35,25 +35,25 @@
         class="m-auto bg-gray-900 text-gray-100 px-14 p-2 rounded-md hover:transform hover:scale-105"
         type="submit"
       >
-        REGISTER
+        REGISTRAR
       </button>
       <button
         @click="openUsers"
         type="button"
         class="m-auto bg-gray-700 text-gray-100 px-14 p-2 rounded-md hover:transform hover:scale-105"
       >
-        SEARCH USER
+        BUSCAR USUÁRIO
       </button>
     </div>
   </form>
 </template>
 
 <script setup lang="ts">
+// @ts-ignore
 import { api } from "../plugins/api";
 import { ref } from "vue";
 import type { Ref } from "vue";
 import { defineProps } from "vue";
-import RegisterMsgVue from "./RegisterMsg.vue";
 
 const formData: Ref<{ name: string; email: string }> = ref({
   name: "",
@@ -68,7 +68,7 @@ props.openUsers;
 const warning: Ref<Boolean> = ref(false);
 const successfully: Ref<Boolean> = ref(false);
 const warningMsg: Ref<string> = ref("campos vazios!");
-const successfullyMsg: Ref<string> = ref("REGISTERED SUCCESSFULLY!");
+const successfullyMsg: Ref<string> = ref("REGISTRADO COM SUCESSO!");
 
 const submitForm: () => Promise<void> = async () => {
   if (formData.value.name !== "" || formData.value.email !== "") {
@@ -83,11 +83,11 @@ const submitForm: () => Promise<void> = async () => {
       formData.value.name = "";
       formData.value.email = "";
     } catch (error) {
-      alert("error when registering user");
+      alert("ERRO AO REGISTRAR USUÁRIO!");
     }
   } else {
     warning.value = true;
-    warningMsg.value = "please fill in all fields";
+    warningMsg.value = "por favor preencha todos os campos!";
   }
 };
 </script>

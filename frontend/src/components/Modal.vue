@@ -1,25 +1,25 @@
 <template>
   <div
-    class="modal flex items-center justify-center flex-col bg-neutral-400 text-gray-900 rounded-md m-4 w-6/12 shadow-xl"
+    class="modal flex items-center justify-center flex-col bg-gray-400 text-gray-900 rounded-md m-4 w-6/12 shadow-xl"
   >
     <div class="modalContent fixed">
+      <button
+        @click="closeModal()"
+        class="bg-gray-500 text-gray-100 rounded-xl p-2 font-semibold hover:opacity-80"
+      >
+        VOLTAR
+      </button>
       <section
         class="header flex flex-col justify-center items-center w-full min-h-96"
       >
-        <button
-          @click="closeModal()"
-          class="bg-neutral-100 rounded-xl p-2 font-semibold"
-        >
-          CLOSE MODAL
-        </button>
-        <h3 class="mt-4 font-semibold">FILTER USERS</h3>
+        <h3 class="mt-4 font-semibold">FILTRAR USUÁRIOS</h3>
         <input
           type="text"
           name="userName"
           v-model="inputChange"
-          placeholder="search user"
+          placeholder="Digite o user"
           @input="emitFilter"
-          class="border-none rounded-lg outline-none px-2"
+          class="border-none rounded-lg outline-none px-3 py-1"
         />
         <div>
           <UsersList
